@@ -392,6 +392,15 @@ MonoBehaviour:
   Text: "\u062C\u0648\u062C\u0644"
   ShowTashkeel: 0
   UseHinduNumbers: 0
+  txt: {fileID: 388841930}
+  OldText: "\u062C\u0648\u062C\u0644"
+  OldFontSize: 16
+  rectTransform: {fileID: 388841928}
+  OldDeltaSize: {x: 100, y: 20}
+  OldEnabled: 1
+  OldRectTransformParents:
+  - {fileID: 1410197542}
+  OldScreenRect: {x: 720, y: 1280}
 --- !u!114 &388841930
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -486,6 +495,15 @@ MonoBehaviour:
   Text: "\u0643\u0644\u0645\u0629 \u0627\u0644\u0633\u0631"
   ShowTashkeel: 0
   UseHinduNumbers: 0
+  txt: {fileID: 438367042}
+  OldText: "\u0643\u0644\u0645\u0629 \u0627\u0644\u0633\u0631"
+  OldFontSize: 16
+  rectTransform: {fileID: 438367040}
+  OldDeltaSize: {x: 100, y: 20}
+  OldEnabled: 1
+  OldRectTransformParents:
+  - {fileID: 1410197542}
+  OldScreenRect: {x: 720, y: 1280}
 --- !u!114 &438367042
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -663,6 +681,16 @@ MonoBehaviour:
   Text: "\u0627\u062F\u062E\u0644 \u0646\u0635\u0627"
   ShowTashkeel: 1
   UseHinduNumbers: 0
+  txt: {fileID: 526928544}
+  OldText: "\u0627\u062F\u062E\u0644 \u0646\u0635\u0627"
+  OldFontSize: 14
+  rectTransform: {fileID: 526928542}
+  OldDeltaSize: {x: -20, y: -13}
+  OldEnabled: 1
+  OldRectTransformParents:
+  - {fileID: 1604499913}
+  - {fileID: 1410197542}
+  OldScreenRect: {x: 720, y: 1280}
 --- !u!114 &526928544
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1101,6 +1129,15 @@ MonoBehaviour:
   Text: "\u0644\u062F\u064A\u0643 \u062D\u0633\u0627\u0628\u061F"
   ShowTashkeel: 0
   UseHinduNumbers: 0
+  txt: {fileID: 830417075}
+  OldText: "\u0644\u062F\u064A\u0643 \u062D\u0633\u0627\u0628\u061F"
+  OldFontSize: 18
+  rectTransform: {fileID: 830417073}
+  OldDeltaSize: {x: 75, y: 20}
+  OldEnabled: 1
+  OldRectTransformParents:
+  - {fileID: 1410197542}
+  OldScreenRect: {x: 720, y: 1280}
 --- !u!114 &830417075
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1433,6 +1470,15 @@ MonoBehaviour:
   Text: "\u0641\u064A\u0633\u0628\u0648\u0643"
   ShowTashkeel: 0
   UseHinduNumbers: 0
+  txt: {fileID: 935686461}
+  OldText: "\u0641\u064A\u0633\u0628\u0648\u0643"
+  OldFontSize: 16
+  rectTransform: {fileID: 935686459}
+  OldDeltaSize: {x: 100, y: 20}
+  OldEnabled: 1
+  OldRectTransformParents:
+  - {fileID: 1410197542}
+  OldScreenRect: {x: 720, y: 1280}
 --- !u!114 &935686461
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1605,6 +1651,15 @@ MonoBehaviour:
   Text: "\u0627\u0644\u0628\u0631\u064A\u062F \u0627\u0644\u0625\u0644\u0643\u062A\u0631\u0648\u0646\u064A"
   ShowTashkeel: 0
   UseHinduNumbers: 0
+  txt: {fileID: 1189157809}
+  OldText: "\u0627\u0644\u0628\u0631\u064A\u062F \u0627\u0644\u0625\u0644\u0643\u062A\u0631\u0648\u0646\u064A"
+  OldFontSize: 16
+  rectTransform: {fileID: 1189157807}
+  OldDeltaSize: {x: 100, y: 20}
+  OldEnabled: 1
+  OldRectTransformParents:
+  - {fileID: 1410197542}
+  OldScreenRect: {x: 720, y: 1280}
 --- !u!114 &1189157809
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1691,7 +1746,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1224915945}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 696ce2cd40d49484ab618bf74d31d4ad, type: 3}
   m_Name: 
@@ -1699,6 +1754,15 @@ MonoBehaviour:
   Text: "\u062F\u0648\u0645\u064A\u0646\u0648"
   ShowTashkeel: 0
   UseHinduNumbers: 0
+  txt: {fileID: 1224915948}
+  OldText: "\u062F\u0648\u0645\u064A\u0646\u0648"
+  OldFontSize: 25
+  rectTransform: {fileID: 1224915946}
+  OldDeltaSize: {x: 200, y: 30}
+  OldEnabled: 1
+  OldRectTransformParents:
+  - {fileID: 1410197542}
+  OldScreenRect: {x: 720, y: 1280}
 --- !u!114 &1224915948
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1871,6 +1935,15 @@ MonoBehaviour:
   Text: "\u0625\u0646\u0634\u0627\u0621 \u062D\u0633\u0627\u0628"
   ShowTashkeel: 0
   UseHinduNumbers: 0
+  txt: {fileID: 1392462110}
+  OldText: "\u0625\u0646\u0634\u0627\u0621 \u062D\u0633\u0627\u0628"
+  OldFontSize: 25
+  rectTransform: {fileID: 1392462108}
+  OldDeltaSize: {x: 200, y: 30}
+  OldEnabled: 1
+  OldRectTransformParents:
+  - {fileID: 1410197542}
+  OldScreenRect: {x: 720, y: 1280}
 --- !u!114 &1392462110
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1987,7 +2060,7 @@ Canvas:
   m_OverrideSorting: 0
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
-  m_AdditionalShaderChannelsFlag: 0
+  m_AdditionalShaderChannelsFlag: 25
   m_SortingLayerID: -215274485
   m_SortingOrder: 0
   m_TargetDisplay: 0
@@ -2158,6 +2231,16 @@ MonoBehaviour:
   Text: "\u0627\u062F\u062E\u0644 \u0646\u0635\u0627"
   ShowTashkeel: 1
   UseHinduNumbers: 0
+  txt: {fileID: 1501986801}
+  OldText: "\u0627\u062F\u062E\u0644 \u0646\u0635\u0627"
+  OldFontSize: 14
+  rectTransform: {fileID: 1501986799}
+  OldDeltaSize: {x: -20, y: -13}
+  OldEnabled: 1
+  OldRectTransformParents:
+  - {fileID: 145197386}
+  - {fileID: 1410197542}
+  OldScreenRect: {x: 720, y: 1280}
 --- !u!114 &1501986801
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2392,6 +2475,16 @@ MonoBehaviour:
   Text: "\u0623\u0646\u0634\u0627\u0621 \u062D\u0633\u0627\u0628"
   ShowTashkeel: 0
   UseHinduNumbers: 0
+  txt: {fileID: 1664657616}
+  OldText: "\u0623\u0646\u0634\u0627\u0621 \u062D\u0633\u0627\u0628"
+  OldFontSize: 14
+  rectTransform: {fileID: 1664657614}
+  OldDeltaSize: {x: 0, y: 0}
+  OldEnabled: 1
+  OldRectTransformParents:
+  - {fileID: 844942984}
+  - {fileID: 1410197542}
+  OldScreenRect: {x: 720, y: 1280}
 --- !u!114 &1664657616
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2486,6 +2579,16 @@ MonoBehaviour:
   Text: "\u062A\u0633\u062C\u064A\u0644 \u0627\u0644\u062F\u062E\u0648\u0644"
   ShowTashkeel: 0
   UseHinduNumbers: 0
+  txt: {fileID: 1789303963}
+  OldText: "\u062A\u0633\u062C\u064A\u0644 \u0627\u0644\u062F\u062E\u0648\u0644"
+  OldFontSize: 14
+  rectTransform: {fileID: 1789303961}
+  OldDeltaSize: {x: 0, y: 0}
+  OldEnabled: 1
+  OldRectTransformParents:
+  - {fileID: 908736171}
+  - {fileID: 1410197542}
+  OldScreenRect: {x: 720, y: 1280}
 --- !u!114 &1789303963
 MonoBehaviour:
   m_ObjectHideFlags: 0
