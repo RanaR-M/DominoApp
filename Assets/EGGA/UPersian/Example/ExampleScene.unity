@@ -237,21 +237,25 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color:
-    r: 0.5147059
-    g: 0.5147059
-    b: 0.5147059
-    a: 1
+  m_Color: {r: 0.5147059, g: 0.5147059, b: 0.5147059, a: 1}
   m_RaycastTarget: 1
+  m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
-      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_FontData: {m_Font: {fileID: 12800000, guid: bed17962dd34baf4fb0eb2869681fffc,
-      type: 3}, m_FontSize: 14, m_FontStyle: 0, m_BestFit: 0, m_MinSize: 10, m_MaxSize: 40,
-    m_Alignment: 5, m_AlignByGeometry: 0, m_RichText: 1, m_HorizontalOverflow: 0,
-    m_VerticalOverflow: 0, m_LineSpacing: 1}
+  m_FontData:
+    m_Font: {fileID: 12800000, guid: bed17962dd34baf4fb0eb2869681fffc, type: 3}
+    m_FontSize: 14
+    m_FontStyle: 0
+    m_BestFit: 0
+    m_MinSize: 10
+    m_MaxSize: 40
+    m_Alignment: 5
+    m_AlignByGeometry: 0
+    m_RichText: 1
+    m_HorizontalOverflow: 0
+    m_VerticalOverflow: 0
+    m_LineSpacing: 1
   m_Text: "\u0646\u0627\u0645 \u062E\u0648\u062F \u0631\u0627 \u0648\u0627\u0631\u062F
     \u06A9\u0646\u064A\u062F..."
 --- !u!222 &162420055
@@ -312,21 +316,25 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color:
-    r: 0.19852942
-    g: 0.19852942
-    b: 0.19852942
-    a: 1
+  m_Color: {r: 0.19852942, g: 0.19852942, b: 0.19852942, a: 1}
   m_RaycastTarget: 1
+  m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
-      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_FontData: {m_Font: {fileID: 12800000, guid: bed17962dd34baf4fb0eb2869681fffc,
-      type: 3}, m_FontSize: 27, m_FontStyle: 0, m_BestFit: 0, m_MinSize: 10, m_MaxSize: 40,
-    m_Alignment: 4, m_AlignByGeometry: 0, m_RichText: 1, m_HorizontalOverflow: 0,
-    m_VerticalOverflow: 0, m_LineSpacing: 1}
+  m_FontData:
+    m_Font: {fileID: 12800000, guid: bed17962dd34baf4fb0eb2869681fffc, type: 3}
+    m_FontSize: 27
+    m_FontStyle: 0
+    m_BestFit: 0
+    m_MinSize: 10
+    m_MaxSize: 40
+    m_Alignment: 4
+    m_AlignByGeometry: 0
+    m_RichText: 1
+    m_HorizontalOverflow: 0
+    m_VerticalOverflow: 0
+    m_LineSpacing: 1
   m_Text: "\u062A\u0627\u0626\u064A\u062F"
 --- !u!222 &168380368
 CanvasRenderer:
@@ -386,21 +394,25 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color:
-    r: 1
-    g: 1
-    b: 1
-    a: 1
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
+  m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
-      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_FontData: {m_Font: {fileID: 12800000, guid: bed17962dd34baf4fb0eb2869681fffc,
-      type: 3}, m_FontSize: 17, m_FontStyle: 0, m_BestFit: 0, m_MinSize: 1, m_MaxSize: 40,
-    m_Alignment: 3, m_AlignByGeometry: 0, m_RichText: 1, m_HorizontalOverflow: 0,
-    m_VerticalOverflow: 0, m_LineSpacing: 1}
+  m_FontData:
+    m_Font: {fileID: 12800000, guid: bed17962dd34baf4fb0eb2869681fffc, type: 3}
+    m_FontSize: 17
+    m_FontStyle: 0
+    m_BestFit: 0
+    m_MinSize: 1
+    m_MaxSize: 40
+    m_Alignment: 3
+    m_AlignByGeometry: 0
+    m_RichText: 1
+    m_HorizontalOverflow: 0
+    m_VerticalOverflow: 0
+    m_LineSpacing: 1
   m_Text: "\u062A\u0648\u0627\u0641\u0642\u0627\u062A \u0631\u0627 \u0645\u064A \u067E\u0630\u064A\u0631\u0645"
 --- !u!222 &323901019
 CanvasRenderer:
@@ -694,21 +706,25 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color:
-    r: 0.11764705
-    g: 0.11764705
-    b: 0.11764705
-    a: 1
+  m_Color: {r: 0.11764705, g: 0.11764705, b: 0.11764705, a: 1}
   m_RaycastTarget: 1
+  m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
-      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_FontData: {m_Font: {fileID: 12800000, guid: bed17962dd34baf4fb0eb2869681fffc,
-      type: 3}, m_FontSize: 14, m_FontStyle: 0, m_BestFit: 0, m_MinSize: 10, m_MaxSize: 40,
-    m_Alignment: 5, m_AlignByGeometry: 0, m_RichText: 1, m_HorizontalOverflow: 0,
-    m_VerticalOverflow: 0, m_LineSpacing: 1}
+  m_FontData:
+    m_Font: {fileID: 12800000, guid: bed17962dd34baf4fb0eb2869681fffc, type: 3}
+    m_FontSize: 14
+    m_FontStyle: 0
+    m_BestFit: 0
+    m_MinSize: 10
+    m_MaxSize: 40
+    m_Alignment: 5
+    m_AlignByGeometry: 0
+    m_RichText: 1
+    m_HorizontalOverflow: 1
+    m_VerticalOverflow: 0
+    m_LineSpacing: 1
   m_Text: 
 --- !u!222 &1140056806
 CanvasRenderer:
@@ -812,7 +828,7 @@ MonoBehaviour:
   m_Interactable: 1
   m_TargetGraphic: {fileID: 1230593159}
   m_TextComponent: {fileID: 1140056805}
-  m_Placeholder: {fileID: 0}
+  m_Placeholder: {fileID: 162420054}
   m_ContentType: 0
   m_InputType: 0
   m_AsteriskChar: 42
@@ -1273,21 +1289,25 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color:
-    r: 1
-    g: 1
-    b: 1
-    a: 1
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
+  m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
-      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_FontData: {m_Font: {fileID: 12800000, guid: bed17962dd34baf4fb0eb2869681fffc,
-      type: 3}, m_FontSize: 20, m_FontStyle: 0, m_BestFit: 0, m_MinSize: 1, m_MaxSize: 40,
-    m_Alignment: 5, m_AlignByGeometry: 0, m_RichText: 1, m_HorizontalOverflow: 0,
-    m_VerticalOverflow: 0, m_LineSpacing: 1}
+  m_FontData:
+    m_Font: {fileID: 12800000, guid: bed17962dd34baf4fb0eb2869681fffc, type: 3}
+    m_FontSize: 20
+    m_FontStyle: 0
+    m_BestFit: 0
+    m_MinSize: 1
+    m_MaxSize: 40
+    m_Alignment: 5
+    m_AlignByGeometry: 0
+    m_RichText: 1
+    m_HorizontalOverflow: 0
+    m_VerticalOverflow: 0
+    m_LineSpacing: 1
   m_Text: "\u0648\u0631\u0648\u062F\u064A \u06A9\u0627\u0631\u0628\u0631:"
 --- !u!222 &2046523860
 CanvasRenderer:
