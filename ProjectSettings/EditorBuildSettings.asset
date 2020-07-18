@@ -11,10 +11,19 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/CreateAccount.unity
     guid: 9afbaa2c60b0352489cce9e2de76068e
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
   - enabled: 1
     path: Assets/Scenes/mainPageGuest.unity
     guid: 0034f194f9727214cb4b3a0c5f3e6507
   - enabled: 1
     path: Assets/Scenes/MainPage1.unity
     guid: 21f5a1a2d2ad4dc40b27e9d1b622365c
+=======
+>>>>>>> parent of 4ffb18f... project settings
+=======
+>>>>>>> parent of 4ffb18f... project settings
+=======
+>>>>>>> parent of 4ffb18f... project settings
   m_configObjects: {}
