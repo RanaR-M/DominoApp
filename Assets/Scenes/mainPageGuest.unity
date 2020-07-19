@@ -1893,6 +1893,7 @@ GameObject:
   - component: {fileID: 2031467925}
   - component: {fileID: 2031467924}
   - component: {fileID: 2031467923}
+  - component: {fileID: 2031467927}
   m_Layer: 5
   m_Name: Exit
   m_TagString: Untagged
@@ -1975,15 +1976,15 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1698507206}
-        m_MethodName: changeScene
-        m_Mode: 5
+      - m_Target: {fileID: 2031467927}
+        m_MethodName: QG
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
-          m_StringArgument: mainPagePlay
+          m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
 --- !u!114 &2031467925
@@ -2023,6 +2024,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2031467921}
   m_CullTransparentMesh: 0
+--- !u!114 &2031467927
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2031467921}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 721a3ad64371d4946880e1a08a6e144a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2120870614
 GameObject:
   m_ObjectHideFlags: 0

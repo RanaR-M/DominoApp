@@ -10,7 +10,7 @@ public class UPersianTextExample : MonoBehaviour
 	void Awake ()
 	{
         // Set Rtl Text without any additional changes.
-	    upText.text = "سلام بدون نیاز به تغییر متن!";
+	   // upText.text = "سلام بدون نیاز به تغییر متن!";
 
         // returns modified text. (Reverse and line fix to show correctly in Ui)
         print(upText.text);
