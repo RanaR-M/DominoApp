@@ -2906,19 +2906,19 @@ MonoBehaviour:
   playerCards: []
   cardText:
   - {fileID: 1831020030}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  - {fileID: 50666660}
+  - {fileID: 1099522255}
+  - {fileID: 1004222021}
+  - {fileID: 1973858412}
+  - {fileID: 1532742851}
+  - {fileID: 954049974}
+  - {fileID: 103635648}
+  - {fileID: 62200282}
+  - {fileID: 727730184}
+  - {fileID: 1568548875}
+  - {fileID: 1022856951}
+  - {fileID: 283763997}
+  - {fileID: 687943538}
 --- !u!1 &1532742849
 GameObject:
   m_ObjectHideFlags: 0
