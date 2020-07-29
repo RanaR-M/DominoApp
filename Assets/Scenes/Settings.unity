@@ -481,7 +481,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   sp_ON: {fileID: 21300000, guid: 2b7474d525f0e744ab96ce1307f52724, type: 3}
   sp_OFF: {fileID: 21300000, guid: b1b4471a256ee264d92bef3eb1b364f1, type: 3}
-  SaveKey: 
+  SaveKey: Cards
 --- !u!114 &237619546
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1309,7 +1309,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   sp_ON: {fileID: 21300000, guid: 2b7474d525f0e744ab96ce1307f52724, type: 3}
   sp_OFF: {fileID: 21300000, guid: b1b4471a256ee264d92bef3eb1b364f1, type: 3}
-  SaveKey: 
+  SaveKey: Music
 --- !u!114 &1053580839
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1528,7 +1528,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   sp_ON: {fileID: 21300000, guid: 2b7474d525f0e744ab96ce1307f52724, type: 3}
   sp_OFF: {fileID: 21300000, guid: b1b4471a256ee264d92bef3eb1b364f1, type: 3}
-  SaveKey: 
+  SaveKey: Volume
 --- !u!114 &1098004549
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2455,7 +2455,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   sp_ON: {fileID: 21300000, guid: 2b7474d525f0e744ab96ce1307f52724, type: 3}
   sp_OFF: {fileID: 21300000, guid: b1b4471a256ee264d92bef3eb1b364f1, type: 3}
-  SaveKey: 
+  SaveKey: Chat
 --- !u!114 &2124939104
 MonoBehaviour:
   m_ObjectHideFlags: 0
