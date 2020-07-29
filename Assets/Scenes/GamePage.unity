@@ -285,7 +285,7 @@ GameObject:
   - component: {fileID: 102034757}
   - component: {fileID: 102034756}
   m_Layer: 5
-  m_Name: card-6
+  m_Name: card-4
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -340,7 +340,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1410197542}
-  m_RootOrder: 10
+  m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -433,7 +433,7 @@ GameObject:
   - component: {fileID: 399284085}
   - component: {fileID: 399284084}
   m_Layer: 5
-  m_Name: card-9
+  m_Name: card-8
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -488,7 +488,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1410197542}
-  m_RootOrder: 13
+  m_RootOrder: 12
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -507,7 +507,7 @@ GameObject:
   - component: {fileID: 493227284}
   - component: {fileID: 493227283}
   m_Layer: 5
-  m_Name: card-3
+  m_Name: card-7
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -562,7 +562,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1410197542}
-  m_RootOrder: 7
+  m_RootOrder: 11
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -883,7 +883,7 @@ GameObject:
   - component: {fileID: 838291701}
   - component: {fileID: 838291700}
   m_Layer: 5
-  m_Name: card-14
+  m_Name: card-10
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -938,7 +938,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1410197542}
-  m_RootOrder: 18
+  m_RootOrder: 14
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -1086,7 +1086,7 @@ GameObject:
   - component: {fileID: 934449707}
   - component: {fileID: 934449706}
   m_Layer: 5
-  m_Name: card-7
+  m_Name: card-3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1141,7 +1141,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1410197542}
-  m_RootOrder: 11
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -1234,7 +1234,7 @@ GameObject:
   - component: {fileID: 1022409693}
   - component: {fileID: 1022409692}
   m_Layer: 5
-  m_Name: card-2
+  m_Name: card-1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1289,7 +1289,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1410197542}
-  m_RootOrder: 6
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -1308,7 +1308,7 @@ GameObject:
   - component: {fileID: 1166125804}
   - component: {fileID: 1166125803}
   m_Layer: 5
-  m_Name: card-13
+  m_Name: card-11
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1363,7 +1363,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1410197542}
-  m_RootOrder: 17
+  m_RootOrder: 15
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -1530,7 +1530,7 @@ GameObject:
   - component: {fileID: 1256813272}
   - component: {fileID: 1256813271}
   m_Layer: 5
-  m_Name: card-10
+  m_Name: card-14
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1585,7 +1585,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1410197542}
-  m_RootOrder: 14
+  m_RootOrder: 18
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -1689,20 +1689,20 @@ RectTransform:
   - {fileID: 920443484}
   - {fileID: 778702922}
   - {fileID: 81777831}
-  - {fileID: 2126012313}
   - {fileID: 1022409694}
-  - {fileID: 493227285}
-  - {fileID: 2094234792}
-  - {fileID: 86514590}
-  - {fileID: 102034758}
+  - {fileID: 2126012313}
   - {fileID: 934449708}
-  - {fileID: 1534663415}
+  - {fileID: 102034758}
+  - {fileID: 86514590}
+  - {fileID: 2094234792}
+  - {fileID: 493227285}
   - {fileID: 399284086}
-  - {fileID: 1256813273}
-  - {fileID: 1849044203}
-  - {fileID: 353094270}
-  - {fileID: 1166125805}
+  - {fileID: 1534663415}
   - {fileID: 838291702}
+  - {fileID: 1166125805}
+  - {fileID: 353094270}
+  - {fileID: 1849044203}
+  - {fileID: 1256813273}
   - {fileID: 1496568342}
   m_Father: {fileID: 0}
   m_RootOrder: 1
@@ -2053,7 +2053,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cd0df4561b8aad94296e059a769343b1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sprites:
+  cardSprites:
   - {fileID: 21300000, guid: a281a376e84dcf845af63f15bad5aed3, type: 3}
   - {fileID: 21300000, guid: 73bb6a36719a0f2499af81dd5ffead76, type: 3}
   - {fileID: 21300000, guid: 7d3e8a7f12405e34fb0d46a72456fc78, type: 3}
@@ -2082,21 +2082,23 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 6f24066f38d00f34a95d71f7b2094346, type: 3}
   - {fileID: 21300000, guid: e9075b7fc8471c64fbe00f9f0e962c43, type: 3}
   - {fileID: 21300000, guid: b26586426a895134395ce8a8a81de04b, type: 3}
-  objects:
-  - {fileID: 838291699}
-  - {fileID: 1166125802}
-  - {fileID: 353094267}
-  - {fileID: 1849044200}
-  - {fileID: 1256813270}
-  - {fileID: 399284083}
-  - {fileID: 1534663412}
+  cardList:
+  - {fileID: 1022409691}
+  - {fileID: 2126012310}
   - {fileID: 934449705}
   - {fileID: 102034755}
   - {fileID: 86514587}
   - {fileID: 2094234789}
   - {fileID: 493227282}
-  - {fileID: 1022409691}
-  - {fileID: 2126012310}
+  - {fileID: 399284083}
+  - {fileID: 1534663412}
+  - {fileID: 838291699}
+  - {fileID: 1166125802}
+  - {fileID: 353094267}
+  - {fileID: 1849044200}
+  - {fileID: 1256813270}
+  opponentCards: []
+  playerCards: []
 --- !u!1 &1534663412
 GameObject:
   m_ObjectHideFlags: 0
@@ -2109,7 +2111,7 @@ GameObject:
   - component: {fileID: 1534663414}
   - component: {fileID: 1534663413}
   m_Layer: 5
-  m_Name: card-8
+  m_Name: card-9
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2164,7 +2166,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1410197542}
-  m_RootOrder: 12
+  m_RootOrder: 13
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -2615,7 +2617,7 @@ GameObject:
   - component: {fileID: 1849044202}
   - component: {fileID: 1849044201}
   m_Layer: 5
-  m_Name: card-11
+  m_Name: card-13
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2670,7 +2672,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1410197542}
-  m_RootOrder: 15
+  m_RootOrder: 17
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -2780,7 +2782,7 @@ GameObject:
   - component: {fileID: 2094234791}
   - component: {fileID: 2094234790}
   m_Layer: 5
-  m_Name: card-4
+  m_Name: card-6
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2835,7 +2837,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1410197542}
-  m_RootOrder: 8
+  m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -2972,7 +2974,7 @@ GameObject:
   - component: {fileID: 2126012312}
   - component: {fileID: 2126012311}
   m_Layer: 5
-  m_Name: card-1
+  m_Name: card-2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3027,7 +3029,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1410197542}
-  m_RootOrder: 5
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
