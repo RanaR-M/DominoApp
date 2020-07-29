@@ -14,7 +14,7 @@ public class cardControl : MonoBehaviour {
     // make static values that come from the switches so that you can chose either the cards or text.
     // i made the code that activates or deactivate the card / text need to get it from the switch
 
-    public bool cardSwitch = true; // show cards 
+    // show cards 
     // make false in inspector to work with text
 
     public string TranslateMethod(Sprite Card) {
@@ -24,9 +24,9 @@ public class cardControl : MonoBehaviour {
         return nameArray[0] + "/" + nameArray[1];
     }
     void Start() {
+        bool cardSwitch = PlayerPrefs.GetInt("Cards") == 0 ? true : false;
         // not mine so i don't know how it works.
         cardSprites.ShuffleMethod();
-
         // switch values
         if (cardSwitch) {
             foreach (GameObject card in cardList) {
@@ -57,19 +57,33 @@ public class cardControl : MonoBehaviour {
         // changing the sprites and texts of the cards
         // you access the text with just .text as it's already a text component so you don't need to use GetComponet<Text>()
 
-        for (int i = 0, j = 0; i < 14; i++, j++) {
-            if (j == 7) {
-                j = 0;
-            }
-            if (i < 7) {
-                // Image not SpriteRenderer as it's an Image not an object with an image.
-                cardList[i].GetComponent<Image>().sprite = playerCards[i];
-                cardText[i].text = TranslateMethod(playerCards[i]);
-            } else {
-                cardList[i].GetComponent<Image>().sprite = opponentCards[j];
-                cardText[i].text = TranslateMethod(opponentCards[j]);
-            }
+        // this code is to see the opponentCards:
+
+        //for (int i = 0, j = 0; i < 14; i++, j++) {
+        //    if (j == 7) {
+        //        j = 0;
+        //    }
+        //    if (i < 7) {
+        //        // Image not SpriteRenderer as it's an Image not an object with an image.
+        //        cardList[i].GetComponent<Image>().sprite = playerCards[i];
+        //        cardText[i].text = TranslateMethod(playerCards[i]);
+        //    } else {
+        //        cardList[i].GetComponent<Image>().sprite = opponentCards[j];
+        //        cardText[i].text = TranslateMethod(opponentCards[j]);
+        //    }
+        //}
+
+
+        for (int i = 0; i < 7; i++) {
+            // Image not SpriteRenderer as it's an Image not an object with an image.
+            cardList[i].GetComponent<Image>().sprite = playerCards[i];
+            cardText[i].text = TranslateMethod(playerCards[i]);
+
         }
+
+
+
+
     }
 
     void Update() {
