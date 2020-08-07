@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.U2D;
 using UnityEngine.UI;
 
 public class cardControl : MonoBehaviour {
@@ -78,7 +79,6 @@ public class cardControl : MonoBehaviour {
             // Image not SpriteRenderer as it's an Image not an object with an image.
             cardList[i].GetComponent<Image>().sprite = playerCards[i];
             cardText[i].text = TranslateMethod(playerCards[i]);
-
         }
 
 
