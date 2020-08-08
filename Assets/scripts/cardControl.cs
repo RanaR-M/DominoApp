@@ -1,15 +1,15 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.U2D;
 using UnityEngine.UI;
 
-public class cardControl : MonoBehaviour {
+public class cardControl : MonoBehaviour
+{
     public List<Sprite> cardSprites = new List<Sprite>();
     public List<GameObject> cardList = new List<GameObject>();
     public List<Sprite> opponentCards = new List<Sprite>();
     public List<Sprite> playerCards = new List<Sprite>();
     public List<Text> cardText = new List<Text>();
+    public List<GameObject> bankCard = new List<GameObject>();
 
     // TODO:
     // make static values that come from the switches so that you can chose either the cards or text.
@@ -24,6 +24,7 @@ public class cardControl : MonoBehaviour {
         char[] nameArray = Card.name.ToCharArray();
         return nameArray[0] + "/" + nameArray[1];
     }
+
     void Start() {
         bool cardSwitch = PlayerPrefs.GetInt("Cards") == 0 ? true : false;
         // not mine so i don't know how it works.
@@ -33,7 +34,8 @@ public class cardControl : MonoBehaviour {
             foreach (GameObject card in cardList) {
                 card.SetActive(true);
             }
-        } else {
+        }
+        else {
             foreach (Text textCard in cardText) {
                 // because text isn't a game object
                 textCard.gameObject.SetActive(true);
@@ -81,12 +83,13 @@ public class cardControl : MonoBehaviour {
             cardText[i].text = TranslateMethod(playerCards[i]);
         }
 
+        cardSprites.ShuffleMethod();
+        for(int i = 0; i < bankCard.Count; i++) {
+            bankCard[i].GetComponent<Image>().sprite = cardSprites[i];
+        }
 
 
-
-    }
-
-    void Update() {
 
     }
 }
+
