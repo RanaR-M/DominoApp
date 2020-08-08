@@ -9,7 +9,7 @@ public class cardControl : MonoBehaviour
     public List<Sprite> opponentCards = new List<Sprite>();
     public List<Sprite> playerCards = new List<Sprite>();
     public List<Text> cardText = new List<Text>();
-    public List<GameObject> bankCards = new List<GameObject>();
+    //public List<GameObject> bankCards = new List<GameObject>();
     public GameObject objectToCopy;
     public Transform objectParent;
 
@@ -102,8 +102,8 @@ public class cardControl : MonoBehaviour
                 }
                 bankCard.transform.localPosition = new Vector2(x, y);
             }
-            bankCards.Add(bankCard);
-            bankCards[i].GetComponent<Image>().sprite = cardSprites[i];
+            //bankCards.Add(bankCard);
+            bankCard.GetComponent<Image>().sprite = cardSprites[i];
         }
         
 
