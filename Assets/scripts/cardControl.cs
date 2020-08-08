@@ -9,7 +9,9 @@ public class cardControl : MonoBehaviour
     public List<Sprite> opponentCards = new List<Sprite>();
     public List<Sprite> playerCards = new List<Sprite>();
     public List<Text> cardText = new List<Text>();
-    public List<GameObject> bankCard = new List<GameObject>();
+    public List<GameObject> bankCards = new List<GameObject>();
+    public GameObject objectToCopy;
+    public Transform objectParent;
 
     // TODO:
     // make static values that come from the switches so that you can chose either the cards or text.
@@ -84,9 +86,26 @@ public class cardControl : MonoBehaviour
         }
 
         cardSprites.ShuffleMethod();
-        for(int i = 0; i < bankCard.Count; i++) {
-            bankCard[i].GetComponent<Image>().sprite = cardSprites[i];
+        int xZero = -220;
+        int yZero = 230;
+        for (int i = 0, x = xZero, y = yZero; i < cardSprites.Count; i++, x -= xZero / 2) {
+            GameObject bankCard = Instantiate(objectToCopy, objectParent) as GameObject;
+            bankCard.name = "BankCard_" + (i + 1);
+            
+            if(i == 0) {
+                bankCard.transform.localPosition = new Vector2(x, y);
+            }
+            else {
+                if (i % 5 == 0) {
+                    y -= 160;
+                    x = xZero;
+                }
+                bankCard.transform.localPosition = new Vector2(x, y);
+            }
+            bankCards.Add(bankCard);
+            bankCards[i].GetComponent<Image>().sprite = cardSprites[i];
         }
+        
 
 
 
