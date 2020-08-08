@@ -13,10 +13,6 @@ public class cardControl : MonoBehaviour
     public GameObject objectToCopy;
     public Transform objectParent;
 
-    // TODO:
-    // make static values that come from the switches so that you can chose either the cards or text.
-    // i made the code that activates or deactivate the card / text need to get it from the switch
-
     // show cards 
     // make false in inspector to work with text
 
@@ -25,6 +21,14 @@ public class cardControl : MonoBehaviour
         // can be used for arabic and english numbers 
         char[] nameArray = Card.name.ToCharArray();
         return nameArray[0] + "/" + nameArray[1];
+    }
+
+    public int TranslateObjectName(GameObject Card) {
+        return int.Parse(Card.name.Split('_')[1]) - 1;
+    }
+
+    public void BankCardsOnclick(GameObject CardClicked) {
+        Debug.Log(TranslateMethod(cardSprites[TranslateObjectName(CardClicked)]));
     }
 
     void Start() {
@@ -102,6 +106,8 @@ public class cardControl : MonoBehaviour
                 }
                 bankCard.transform.localPosition = new Vector2(x, y);
             }
+            bankCard.AddComponent<Button>().onClick.AddListener(() => BankCardsOnclick(bankCard));
+            //UnityEnigne.Events.UnityAction
             //bankCards.Add(bankCard);
             bankCard.GetComponent<Image>().sprite = cardSprites[i];
         }
