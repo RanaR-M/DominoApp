@@ -5,13 +5,17 @@ using UnityEngine.UI;
 public class cardControl : MonoBehaviour
 {
     public List<Sprite> cardSprites = new List<Sprite>();
-    public List<GameObject> cardList = new List<GameObject>();
+    //public List<GameObject> cardList = new List<GameObject>();
     public List<Sprite> opponentCards = new List<Sprite>();
-    public List<Sprite> playerCards = new List<Sprite>();
+    //public List<Sprite> playerCards = new List<Sprite>();
+    //public List<GameObject> opponentCards = new List<GameObject>();
+    public List<GameObject> playerCards = new List<GameObject>();
     public List<Text> cardText = new List<Text>();
     //public List<GameObject> bankCards = new List<GameObject>();
     public GameObject objectToCopy;
     public Transform objectParent;
+    public Transform objectNewParent;
+    public Transform newRow;
 
     // show cards 
     // make false in inspector to work with text
@@ -29,6 +33,25 @@ public class cardControl : MonoBehaviour
 
     public void BankCardsOnclick(GameObject CardClicked) {
         Debug.Log(TranslateMethod(cardSprites[TranslateObjectName(CardClicked)]));
+        CardClicked.GetComponent<Image>().sprite = cardSprites[TranslateObjectName(CardClicked)];
+        CardClicked.GetComponent<Button>().onClick = null;
+        playerCards.Add(CardClicked);
+        if (playerCards.Count <= 9) {
+            CardClicked.transform.SetParent(objectNewParent);
+            CardClicked.transform.parent.localScale -= new Vector3(.1f, .1f, 0);
+            CardClicked.transform.parent.localPosition -= new Vector3(11, 0, 0);
+            if (CardClicked.transform.localScale != playerCards[0].transform.localScale) {
+                CardClicked.transform.localScale = playerCards[0].transform.localScale;
+            }
+            Vector3 cardZeroPosition = playerCards[0].transform.localPosition;
+            CardClicked.transform.localPosition = cardZeroPosition + new Vector3(90 * (playerCards.Count - 1), 60, 0);
+        }
+        else {
+            CardClicked.transform.SetParent(newRow);
+            
+        }
+
+        cardSprites.RemoveAt(TranslateObjectName(CardClicked));
     }
 
     void Start() {
@@ -37,7 +60,7 @@ public class cardControl : MonoBehaviour
         cardSprites.ShuffleMethod();
         // switch values
         if (cardSwitch) {
-            foreach (GameObject card in cardList) {
+            foreach (GameObject card in playerCards) {
                 card.SetActive(true);
             }
         }
@@ -52,12 +75,14 @@ public class cardControl : MonoBehaviour
 
         // loops to assign the cards for both the player and the opponent
         // i don't check if the random number has been done before because i remove the sprite when chosen just like a real game
-        for (int i = 0; i < 7; i++) {
+        for (int i = 0; i < playerCards.Count; i++) {
             int randomNumber = Random.Range(1, cardSprites.Count);
-            playerCards.Add(cardSprites[randomNumber]);
+            playerCards[i].GetComponent<Image>().sprite = cardSprites[randomNumber];
+            cardText[i].text = TranslateMethod(playerCards[i].GetComponent<Image>().sprite);
             cardSprites.RemoveAt(randomNumber);
         }
-        for (int i = 0; i < 7; i++) {
+        int opponentCount = 7;
+        for (int i = 0; i < opponentCount; i++) {
             int randomNumber = Random.Range(1, cardSprites.Count);
             opponentCards.Add(cardSprites[randomNumber]);
             cardSprites.RemoveAt(randomNumber);
@@ -83,20 +108,14 @@ public class cardControl : MonoBehaviour
         //}
 
 
-        for (int i = 0; i < 7; i++) {
-            // Image not SpriteRenderer as it's an Image not an object with an image.
-            cardList[i].GetComponent<Image>().sprite = playerCards[i];
-            cardText[i].text = TranslateMethod(playerCards[i]);
-        }
-
         cardSprites.ShuffleMethod();
         int xZero = -220;
         int yZero = 230;
         for (int i = 0, x = xZero, y = yZero; i < cardSprites.Count; i++, x -= xZero / 2) {
             GameObject bankCard = Instantiate(objectToCopy, objectParent) as GameObject;
             bankCard.name = "BankCard_" + (i + 1);
-            
-            if(i == 0) {
+
+            if (i == 0) {
                 bankCard.transform.localPosition = new Vector2(x, y);
             }
             else {
@@ -107,11 +126,9 @@ public class cardControl : MonoBehaviour
                 bankCard.transform.localPosition = new Vector2(x, y);
             }
             bankCard.AddComponent<Button>().onClick.AddListener(() => BankCardsOnclick(bankCard));
-            //UnityEnigne.Events.UnityAction
-            //bankCards.Add(bankCard);
-            bankCard.GetComponent<Image>().sprite = cardSprites[i];
+            //bankCard.GetComponent<Image>().sprite = cardSprites[i];
         }
-        
+
 
 
 
