@@ -15,6 +15,11 @@ public class pauseControl : MonoBehaviour
         pauseMenu.SetActive(true);
     }
 
+    public void ResumeGameWithArgument(GameObject pauseMenu) {
+        this.pauseMenu = pauseMenu;
+        ResumeGame();
+    }
+
     public void ResumeGame() {
         pauseMenu.SetActive(false);
     }

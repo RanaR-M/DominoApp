@@ -5,18 +5,15 @@ using UnityEngine.UI;
 public class cardControl : MonoBehaviour
 {
     public List<Sprite> cardSprites = new List<Sprite>();
-    //public List<GameObject> cardList = new List<GameObject>();
     public List<Sprite> opponentCards = new List<Sprite>();
-    //public List<Sprite> playerCards = new List<Sprite>();
-    //public List<GameObject> opponentCards = new List<GameObject>();
     public List<GameObject> playerCards = new List<GameObject>();
     public List<Text> cardText = new List<Text>();
-    //public List<GameObject> bankCards = new List<GameObject>();
+    public List<GameObject> bankCards = new List<GameObject>();
     public GameObject objectToCopy;
     public Transform objectParent;
     public Transform objectNewParent;
     public Transform newRow;
-
+    int currentCards;
     // show cards 
     // make false in inspector to work with text
 
@@ -31,12 +28,28 @@ public class cardControl : MonoBehaviour
         return int.Parse(Card.name.Split('_')[1]) - 1;
     }
 
+
+
     public void BankCardsOnclick(GameObject CardClicked) {
+        currentCards = cardSprites.Count;
         Debug.Log(TranslateMethod(cardSprites[TranslateObjectName(CardClicked)]));
-        CardClicked.GetComponent<Image>().sprite = cardSprites[TranslateObjectName(CardClicked)];
         CardClicked.GetComponent<Button>().onClick = null;
         playerCards.Add(CardClicked);
-        if (playerCards.Count <= 9) {
+        if (playerCards.Count > 9) {
+            CardClicked.transform.SetParent(newRow);
+            if (playerCards.Count > 10) {
+                if (CardClicked.transform.localScale != playerCards[8].transform.localScale) {
+                    CardClicked.transform.localScale = playerCards[8].transform.localScale;
+                }
+            }
+            else {
+                CardClicked.transform.parent.localPosition += new Vector3(45, 0, 0);
+                CardClicked.transform.parent.localScale = objectNewParent.transform.localScale;
+            }
+            CardClicked.transform.localPosition = new Vector3(90 * (playerCards.Count - 10), 60, 0);
+
+        }
+        else {
             CardClicked.transform.SetParent(objectNewParent);
             CardClicked.transform.parent.localScale -= new Vector3(.1f, .1f, 0);
             CardClicked.transform.parent.localPosition -= new Vector3(11, 0, 0);
@@ -45,17 +58,59 @@ public class cardControl : MonoBehaviour
             }
             Vector3 cardZeroPosition = playerCards[0].transform.localPosition;
             CardClicked.transform.localPosition = cardZeroPosition + new Vector3(90 * (playerCards.Count - 1), 60, 0);
+
+        }
+        CardClicked.GetComponent<Image>().sprite = cardSprites[TranslateObjectName(CardClicked)];
+        cardSprites.RemoveAt(TranslateObjectName(CardClicked));
+        bankCards.RemoveAt(TranslateObjectName(CardClicked));
+    }
+
+    void BankCardsShow() {
+        cardSprites.ShuffleMethod();
+        int xZero = -220;
+        int yZero = 230;
+        if (bankCards.Count == 0) {
+            for (int i = 0, x = xZero, y = yZero; i < cardSprites.Count; i++, x -= xZero / 2) {
+                GameObject bankCard = Instantiate(objectToCopy, objectParent) as GameObject;
+                bankCard.name = "BankCard_" + (i + 1);
+                if (i == 0) {
+                    bankCard.transform.localPosition = new Vector2(x, y);
+                }
+                else {
+                    if (i % 5 == 0) {
+                        y -= 160;
+                        x = xZero;
+                    }
+                    bankCard.transform.localPosition = new Vector2(x, y);
+                }
+                bankCards.Add(bankCard);
+                bankCard.AddComponent<Button>().onClick.AddListener(() => BankCardsOnclick(bankCard));
+                bankCard.GetComponent<Button>().onClick.AddListener(() => objectParent.gameObject.SetActive(false));
+            }
         }
         else {
-            CardClicked.transform.SetParent(newRow);
-            
+            for (int i = 0, x = xZero, y = yZero; i < bankCards.Count; i++, x -= xZero / 2) {
+                GameObject bankCard = bankCards[i];
+                bankCard.name = "BankCard_" + (i + 1);
+                if (i == 0) {
+                    bankCard.transform.localPosition = new Vector2(x, y);
+                }
+                else {
+                    if (i % 5 == 0) {
+                        y -= 160;
+                        x = xZero;
+                    }
+                    bankCard.transform.localPosition = new Vector2(x, y);
+                }
+            }
         }
 
-        cardSprites.RemoveAt(TranslateObjectName(CardClicked));
     }
 
     void Start() {
         bool cardSwitch = PlayerPrefs.GetInt("Cards") == 0 ? true : false;
+
+
         // not mine so i don't know how it works.
         cardSprites.ShuffleMethod();
         // switch values
@@ -107,31 +162,25 @@ public class cardControl : MonoBehaviour
         //    }
         //}
 
-
-        cardSprites.ShuffleMethod();
-        int xZero = -220;
-        int yZero = 230;
-        for (int i = 0, x = xZero, y = yZero; i < cardSprites.Count; i++, x -= xZero / 2) {
-            GameObject bankCard = Instantiate(objectToCopy, objectParent) as GameObject;
-            bankCard.name = "BankCard_" + (i + 1);
-
-            if (i == 0) {
-                bankCard.transform.localPosition = new Vector2(x, y);
-            }
-            else {
-                if (i % 5 == 0) {
-                    y -= 160;
-                    x = xZero;
-                }
-                bankCard.transform.localPosition = new Vector2(x, y);
-            }
-            bankCard.AddComponent<Button>().onClick.AddListener(() => BankCardsOnclick(bankCard));
-            //bankCard.GetComponent<Image>().sprite = cardSprites[i];
-        }
-
-
+        BankCardsShow();
 
 
     }
-}
 
+
+
+    void Update() {
+        int newCards = cardSprites.Count;
+        //Debug.Log("new:" + newCards + " old:" + currentCards);
+        if (newCards < 14 && objectParent.gameObject.activeInHierarchy) {
+            if (currentCards - newCards == 1) {
+                BankCardsShow();
+                Debug.Log("new:" + newCards + " old:" + currentCards);
+            }
+        }
+
+        // old count new couny
+    }
+
+
+}
