@@ -12,7 +12,7 @@ public class navigation : MonoBehaviour {
     }
 
     void Update() {
-        if (Input.GetKeyDown(KeyCode.Escape) && !scenes.Peek().Equals("GamePage")) {
+        if (Input.GetKeyDown(KeyCode.Escape) && !scenes.Peek().Equals("GamePage") && !scenes.Peek().Equals("OfflinePage")) {
             previousScene();
         }
 
