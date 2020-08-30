@@ -3,9 +3,13 @@
     public enum direction
     {
         middle,
-        right,
-        left,
-        rightLeft,
+        rightTop,
+        rightBottom,
+        leftTop,
+        leftBottom,
+        rightLeftTop,
+        rightLeftBottom,
+        rightLeftMixed,
         none
     }
 

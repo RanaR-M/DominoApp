@@ -1,5 +1,7 @@
-﻿using System.Collections.Generic;
-using System.Linq;
+﻿
+using System;
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -17,20 +19,21 @@ public class cardControl : MonoBehaviour
     public GameObject objectToCopy;
     public GameObject middleCard;
     public GameObject lastCardInbank;
+    public GameObject directionControlObject;
     public Transform objectParent;
     public Transform objectNewParent;
     public Transform newRow;
     public Transform playingGround;
     public Transform testParent;
+    public Button bankButton;
     int currentCards;
     int playerCardsCount;
     int opponentCardsCount;
+    public int usedCardsCount;
     static Vector3 zeroPositionParent;
     static Vector3 zeroScaleParent;
     static Vector3 zeroPositonPlayingGround;
-    static Vector3 opponentCardsZero;
-    // show cards 
-    // make false in inspector to work with text
+    DirectionEnum.direction directionChosen;
 
     string TranslateMethod(Sprite Card) {
         // used to build the text ex: 1/5 using the name of the sprites 
@@ -39,311 +42,489 @@ public class cardControl : MonoBehaviour
         return nameArray[0] + "/" + nameArray[1];
     }
 
-    char[] GetValue(GameObject playingCard) {
-        char[] valueOfCard = TranslateMethod(playingCard.GetComponent<Image>().sprite).ToCharArray();
-        char[] valueToReturn = new char[2];
-        valueToReturn[0] = valueOfCard[0];
-        valueToReturn[1] = valueOfCard[2];
-        return valueToReturn;
-    }
-
     int TranslateObjectName(GameObject Card) {
         return int.Parse(Card.name.Split('_')[1]) - 1;
     }
 
-    void SelectCard(GameObject selectedCard) {
-        if (selectedCard.transform.parent.name.Equals(testParent.name)) {
-            selectedCard.transform.SetParent(playingGround);
-            selectedCard.transform.localScale = new Vector3(1, 1, 1);
-            playingCards.Add(selectedCard);
-            testCards.RemoveAt(TranslateObjectName(selectedCard));
-            opponentCards.RemoveAt(TranslateObjectName(selectedCard));
-            selectedCard.name = "card" + "_" + playingCards.Count;
-            SetPositon(selectedCard);
+
+    int[] GetValue(GameObject playingCard, char printValue) {
+        char[] valueOfCard = TranslateMethod(playingCard.GetComponent<Image>().sprite).ToCharArray();
+        int[] valueToReturn;
+        bool switchValue = false;
+        // tail of right side is different that the left one imagine it 
+
+
+        if (Quaternion.Angle(playingCard.transform.localRotation, (Quaternion.Euler(0, 0, 180) * Quaternion.Euler(0, 0, 90))) == 0) {
+            // for bottom cards that isnt no 5,9 or anybigger than 11
+            if (leftCards.Contains(playingCard) || rightCards.Contains(playingCard)) {
+
+                switchValue = true;
+                if ((((leftCards.Count == 5 || leftCards.Count == 23) || (leftCards.Count > 11 && leftCards.Count < 17)) && leftCards.Contains(playingCard))
+                    || (((rightCards.Count == 5 || rightCards.Count == 23) || (rightCards.Count > 11 && rightCards.Count < 17)) && rightCards.Contains(playingCard))) {
+
+                    switchValue = false;
+                }
+            }
+
+        }
+        else if (Quaternion.Angle(playingCard.transform.localRotation, Quaternion.Euler(0, 0, 180)) == 0 && rightCards.Contains(playingCard)) {
+            if (rightCards.Count < 17) {
+                switchValue = true;
+            }
+            // a rightBottom straight card
+
+        }
+        else if (Quaternion.Angle(playingCard.transform.localRotation, Quaternion.Euler(0, 0, 0)) == 0 && leftCards.Contains(playingCard)) {
+
+            if (leftCards.Count < 17) {
+                switchValue = true;
+            }
+            // a lefttop straight card
+
+        }
+        else if (Quaternion.Angle(playingCard.transform.localRotation, Quaternion.Euler(0, 0, 180)) == 0 && leftCards.Contains(playingCard) && leftCards.Count > 16) {
+
+            switchValue = true;
+        }
+        else if (Quaternion.Angle(playingCard.transform.localRotation, Quaternion.Euler(0, 0, 0)) == 0 && rightCards.Contains(playingCard) && rightCards.Count > 16) {
+
+            switchValue = true;
+        }
+        else if ((((leftCards.Count == 5 || leftCards.Count == 23) || (leftCards.Count > 11 && leftCards.Count < 17)) && leftCards.Contains(playingCard))
+           || (((rightCards.Count == 5 || rightCards.Count == 23) || (rightCards.Count > 11 && rightCards.Count < 17)) && rightCards.Contains(playingCard))) {
+
+            switchValue = true;
         }
         else {
-            selectedCard.transform.SetParent(playingGround);
-            selectedCard.transform.localScale = new Vector3(1, 1, 1);
-            playingCards.Add(selectedCard);
-            playerCards.RemoveAt(TranslateObjectName(selectedCard));
-            selectedCard.name = "card" + "_" + playingCards.Count;
-            SetPositon(selectedCard);
+            switchValue = false;
         }
 
+        if (switchValue) {
+            valueToReturn = new int[] { (int)System.Char.GetNumericValue(valueOfCard[2])
+                , (int)System.Char.GetNumericValue(valueOfCard[0]) };
+        }
+        else {
+            valueToReturn = new int[] { (int)System.Char.GetNumericValue(valueOfCard[0])
+                , (int)System.Char.GetNumericValue(valueOfCard[2]) };
+        }
+        if (printValue.Equals('y')) {
+            Debug.Log(valueToReturn[0] + " " + valueToReturn[1]);
+        }
 
+        return valueToReturn;
     }
 
-    void SetPositon(GameObject card) {
-        card.GetComponent<Button>().onClick.RemoveAllListeners();
+    IEnumerator waitUntilPressed(GameObject Card) {
+        DirectionControl controlObject = directionControlObject.gameObject.GetComponent<DirectionControl>();
+
+        int[] cardValue = GetValue(Card, 'y');
+        int[] rightCardValue;
+        int[] leftCardValue;
+        int[] middleCardValue;
+
+        bool leftTop = false;
+        bool leftBottom = false;
+        bool rightTop = false;
+        bool rightBottom = false;
+        bool check = true;
         int count = playingCards.Count;
-        int numberInSides = (int)((count - 1) / 2);
-        if (count == 1) {
-            card.transform.localPosition = new Vector2(0, 0);
-        }
-        else {
-            // need to edit but only for testing
-
-            if (count < 6) {
-                card.transform.localRotation = Quaternion.Euler(0, 0, 90);
-                card.GetComponent<RectTransform>().pivot = new Vector2(.5f, .5f);
-                zeroPositonPlayingGround = playingGround.localPosition;
-                if (count % 2 == 0) {
-                    //left
-                    if (numberInSides == 0) {
-                        card.transform.localPosition = playingCards[0].transform.localPosition + new Vector3(92, 0, 0);
-                    }
-                    else {
-                        card.transform.localPosition = playingCards[1].transform.localPosition + new Vector3(120 * numberInSides, 0, 0);
-                    }
-
-                }
-                else {
-                    if (numberInSides == 1) {
-                        card.transform.localPosition = playingCards[0].transform.localPosition - new Vector3(92, 0, 0);
-                    }
-                    else {
-                        card.transform.localPosition = playingCards[2].transform.localPosition - new Vector3(120 * (numberInSides - 1), 0, 0);
-                    }
-
-                }
-            }
-            else if (count < 10) {
-                playingGround.transform.localPosition = zeroPositonPlayingGround + new Vector3(0, 200, 0);
-                if (count % 2 == 0) {
-                    if (count == 6) {
-                        card.transform.localPosition = playingCards[3].transform.localPosition + new Vector3(30, -90, 0);
-                    }
-                    else {
-                        card.transform.localPosition = playingCards[count - 3].transform.localPosition + new Vector3(0, -120, 0);
-                    }
-
-                }
-                else {
-                    if (count == 7) {
-                        card.transform.localPosition = playingCards[4].transform.localPosition + new Vector3(-30, -90, 0);
-
-                    }
-                    else {
-                        card.transform.localPosition = playingCards[count - 3].transform.localPosition + new Vector3(0, -120, 0);
-                    }
-
-                }
-            }
-            else if (count < 12) {
-                card.transform.localRotation = Quaternion.Euler(0, 0, 90);
-                card.GetComponent<RectTransform>().pivot = new Vector2(.5f, .5f);
-                if (count % 2 == 0) {
-                    card.transform.localPosition = playingCards[3].transform.localPosition + new Vector3(0, -120 * (numberInSides - 2) - 60, 0);
-                }
-                else {
-                    card.transform.localPosition = playingCards[4].transform.localPosition + new Vector3(0, -120 * (numberInSides - 3) - 60, 0);
-                }
-            }
-            else if (count < 18) {
-                if (count % 2 == 0) {
-                    if (count == 12) {
-                        card.transform.parent.localPosition += new Vector3(0, 50, 0);
-                        card.transform.localPosition = playingCards[count - 3].transform.localPosition + new Vector3(-90, -30, 0);
-                        card.transform.parent.localScale = new Vector3(.9f, .9f, 1);
-                    }
-                    else {
-                        card.transform.localPosition = playingCards[count - 3 ].transform.localPosition + new Vector3(0, -120, 0);
-                    }
-
-                }
-                else {
-                    if (count == 13) {
-                        card.transform.localPosition = playingCards[count - 3].transform.localPosition + new Vector3(90, -30, 0);
-                    }
-                    else {
-                        card.transform.localPosition = playingCards[count - 3].transform.localPosition + new Vector3(0, -120, 0);
-                    }
-
-                }
-            }
-            else if (count < 22) {
-                card.transform.localRotation = Quaternion.Euler(0, 0, 90);
-                if (count % 2 == 0) {
-                    if (count == 18) {
-                        card.transform.parent.localScale = new Vector3(.8f, .8f, 0);
-                        card.transform.localPosition = playingCards[count - 3].transform.localPosition + new Vector3(30, -90, 0);
-
-                    }
-                    else {
-                        card.transform.localPosition = playingCards[count - 3].transform.localPosition + new Vector3(120, 0, 0);
-                    }
-                }
-                else {
-                    if (count == 19) {
-                        card.transform.localPosition = playingCards[count - 3].transform.localPosition + new Vector3(-30, -90, 0);
-                    }
-                    else {
-                        card.transform.localPosition = playingCards[count - 3].transform.localPosition - new Vector3(120, 0, 0);
-                    }
-                }
-            }
-            else if (count < 24) {
-                if(count % 2 == 0) {
-                    if (count == 22) {
-                        card.transform.localPosition = playingCards[count - 3].transform.localPosition + new Vector3(70, -90, 0);
-                    } 
-                    //else {
-                    //    card.transform.localPosition = playingCards[count - 3].transform.localPosition + new Vector3(0, -120, 0);
-                    //}
-                }
-                else {
-                    if (count == 23) {
-                        card.transform.localPosition = playingCards[count - 3].transform.localPosition + new Vector3(-70, -90, 0);
-
-                    }
-                    //else {
-                    //    card.transform.localPosition = playingCards[count - 3].transform.localPosition + new Vector3(0, -120, 0);
-                    //}
-                }
-                
-            }
-            else if (count >= 24) {
-                card.transform.localRotation = Quaternion.Euler(0, 0, 90);
-                card.GetComponent<RectTransform>().pivot = new Vector2(.5f, .5f);
-                int c = 1;
-                if (count % 2 == 0) {
-                    if (count == 24) {
-                        card.transform.parent.localScale = new Vector3(.7f, .7f, 1);
-                        card.transform.localPosition = playingCards[count - 3].transform.localPosition + new Vector3(-95, -30, 0);
-                    }
-                    else {
-                        card.transform.localPosition = playingCards[count - 3].transform.localPosition + new Vector3(-125 * c, 0, 0);
-                    }
-
-
-                }
-                else {
-                    if (count == 25) {
-                        card.transform.localPosition = playingCards[count - 3].transform.localPosition + new Vector3(95, -30, 0);
-                    }
-                    else {
-                        card.transform.localPosition = playingCards[count - 3].transform.localPosition + new Vector3(125 * c++, 0, 0);
-                    }
-
-
-
-                }
-                if(count == 28) {
-                    card.transform.localPosition += new Vector3(3.25f, 0, 0); 
-                }
-            }
-
-            if ((count - 1) % 2 == 0 && count != 0 && count != 1) {
-                //card.transform.parent.localScale -= new Vector3(.1f, .1f, 0);
-            }
-        }
-    }
-
-    DirectionEnum.direction DirectionOfCard(GameObject Card) {
-        char[] cardValue = GetValue(Card);
-        if (rightCards.Count == 0 && leftCards.Count == 0) {
-            return DirectionEnum.direction.middle;
-        }
-        else if (rightCards.Count == 0 && leftCards.Count > 0) {
-            char[] middleCardValue = GetValue(middleCard);
-            char[] leftCardValue = GetValue(leftCards[leftCards.Count - 1]);
-            bool left = false;
-            bool right = false;
-            if (cardValue.Contains(middleCardValue[0]) || cardValue.Contains(middleCardValue[1])) {
-                right = true;
-                // left
-            }
-            else if (cardValue.Contains(leftCardValue[0]) || cardValue.Contains(leftCardValue[1])) {
-                left = true;
-                // right
-            }
-            if (right || left) {
-                if (right) {
-                    return DirectionEnum.direction.right;
-                }
-                else if (left) {
-                    return DirectionEnum.direction.left;
-                }
-                else if (left && right) {
-                    return DirectionEnum.direction.rightLeft;
-                }
-
+        if (middleCard == null) {
+            if (cardValue[0].Equals(cardValue[1])) {
+                middleCard = Card;
+                directionChosen = DirectionEnum.direction.middle;
+                setActualPosition(Card, directionChosen);
+                check = false;
             }
             else {
-                return DirectionEnum.direction.none;
+                directionChosen = DirectionEnum.direction.none;
+                setActualPosition(Card, directionChosen);
+                check = false;
+            }
+        }
+        else if (rightCards.Count == 0 && leftCards.Count == 0) {
+            middleCardValue = GetValue(middleCard, 'y');
+            if (middleCardValue[0].Equals(cardValue[0])) {
+                leftTop = true;
+                rightTop = true;
+            }
+            else if (middleCardValue[0].Equals(cardValue[1])) {
+                leftBottom = true;
+                rightBottom = true;
+            }
+        }
+        else if (rightCards.Count == 0 && leftCards.Count > 0) {
+            middleCardValue = GetValue(middleCard, 'y');
+            leftCardValue = GetValue(leftCards[leftCards.Count - 1],'y');
+
+
+            if (middleCardValue[0].Equals(cardValue[0])) {
+                rightTop = true;
+            }
+            else if (middleCardValue[0].Equals(cardValue[1])) {
+                rightBottom = true;
+            }
+            if (leftCardValue[0].Equals(cardValue[0])) {
+                leftTop = true;
+            }
+            else if (leftCardValue[0].Equals(cardValue[1])) {
+                leftBottom = true;
             }
             // left, middle
         }
         else if (rightCards.Count > 0 && leftCards.Count == 0) {
-            char[] middleCardValue = GetValue(middleCard);
-            char[] rightCardValue = GetValue(leftCards[rightCards.Count - 1]);
-            bool left = false;
-            bool right = false;
-            if (cardValue.Contains(middleCardValue[0]) || cardValue.Contains(middleCardValue[1])) {
-                left = true;
-                // left
-            }
-            else if (cardValue.Contains(rightCardValue[0]) || cardValue.Contains(rightCardValue[1])) {
-                right = true;
-                // right
-            }
-            if (right || left) {
-                if (right) {
-                    return DirectionEnum.direction.right;
-                }
-                else if (left) {
-                    return DirectionEnum.direction.left;
-                }
-                else if (left && right) {
-                    return DirectionEnum.direction.rightLeft;
-                }
+            middleCardValue = GetValue(middleCard, 'y');
+            rightCardValue = GetValue(rightCards[rightCards.Count - 1], 'y');
 
+            if (middleCardValue[0].Equals(cardValue[0])) {
+                leftTop = true;
             }
-            else {
-                return DirectionEnum.direction.none;
+            else if (middleCardValue[0].Equals(cardValue[1])) {
+                leftBottom = true;
             }
-        }
-
-
-        // right, middle
-
-        // check right/ left if not check middle
+            if (rightCardValue[1].Equals(cardValue[0])) {
+                rightTop = true;
+            }
+            else if (rightCardValue[1].Equals(cardValue[1])) {
+                rightBottom = true;
+            }
+        }  // right, middle
         else {
-            char[] rightCardValue = GetValue(rightCards[rightCards.Count - 1]);
-            char[] leftCardValue = GetValue(leftCards[leftCards.Count - 1]);
-            bool left = false;
-            bool right = false;
-            if (cardValue.Contains(rightCardValue[0]) || cardValue.Contains(rightCardValue[1])) {
-                right = true;
-                // left
+            rightCardValue = GetValue(rightCards[rightCards.Count - 1], 'y');
+            leftCardValue = GetValue(leftCards[leftCards.Count - 1], 'y');
+            if (rightCardValue[1].Equals(cardValue[0])) {
+                rightTop = true;
             }
-            else if (cardValue.Contains(leftCardValue[0]) || cardValue.Contains(leftCardValue[1])) {
-                left = true;
-                // right
+            else if (rightCardValue[1].Equals(cardValue[1])) {
+                rightBottom = true;
             }
-            if (right || left) {
-                if (right) {
-                    return DirectionEnum.direction.right;
-                }
-                else if (left) {
-                    return DirectionEnum.direction.left;
-                }
-                else if (left && right) {
-                    return DirectionEnum.direction.rightLeft;
-                }
-
+            if (leftCardValue[0].Equals(cardValue[0])) {
+                leftTop = true;
             }
-            else {
-                return DirectionEnum.direction.none;
+            else if (leftCardValue[0].Equals(cardValue[1])) {
+                leftBottom = true;
             }
 
-            // check left and right
         }
 
-        return DirectionEnum.direction.none;
+        if (check) {
+            if (rightBottom && leftBottom) {
+                controlObject.QuitMenuDisplay();
+                yield return new WaitUntil(() => controlObject.buttonPressed);
+                if (controlObject.direction == 1) {
+                    directionChosen = DirectionEnum.direction.rightBottom;
+                }
+                else {
+                    directionChosen = DirectionEnum.direction.leftBottom;
+                }
+
+            }
+            else if (rightTop && leftTop) {
+                controlObject.QuitMenuDisplay();
+                yield return new WaitUntil(() => controlObject.buttonPressed);
+                if (controlObject.direction == 1) {
+                    directionChosen = DirectionEnum.direction.rightTop;
+                }
+                else {
+                    directionChosen = DirectionEnum.direction.leftTop;
+                }
+            }
+            else if (rightTop && leftBottom) {
+                controlObject.QuitMenuDisplay();
+                yield return new WaitUntil(() => controlObject.buttonPressed);
+                if (controlObject.direction == 1) {
+                    directionChosen = DirectionEnum.direction.rightTop;
+                }
+                else {
+                    directionChosen = DirectionEnum.direction.leftBottom;
+                }
+
+            }
+            else if (rightBottom && leftTop) {
+                controlObject.QuitMenuDisplay();
+                yield return new WaitUntil(() => controlObject.buttonPressed);
+                if (controlObject.direction == 1) {
+                    directionChosen = DirectionEnum.direction.rightBottom;
+                }
+                else {
+                    directionChosen = DirectionEnum.direction.leftTop;
+                }
+            }
+            else if (rightTop) {
+                directionChosen = DirectionEnum.direction.rightTop;
+            }
+            else if (rightBottom) {
+                directionChosen = DirectionEnum.direction.rightBottom;
+            }
+            else if (leftTop) {
+                directionChosen = DirectionEnum.direction.leftTop;
+            }
+            else if (leftBottom) {
+                directionChosen = DirectionEnum.direction.leftBottom;
+            }
+            else {
+                directionChosen = DirectionEnum.direction.none;
+            }
+
+            if (directionChosen != DirectionEnum.direction.middle) {
+                setActualPosition(Card, directionChosen);
+            }
+            controlObject.buttonPressed = false;
+        }
+
+
     }
 
-    GameObject playerCard_1;
+    // call waitUntilPressed first other than setActuallPositon
+    void setActualPosition(GameObject Card, DirectionEnum.direction directionToPut) {
+        Card.GetComponent<Button>().onClick.RemoveAllListeners();
+        DirectionEnum.direction placeOfCardVar = directionToPut;
+        int name = TranslateObjectName(Card);
+        if (placeOfCardVar != DirectionEnum.direction.none) {
+            if (Card.transform.parent.name.Equals(testParent.name)) {
+                testCards.RemoveAt(name);
+                opponentCards.RemoveAt(name);
+            }
+            else {
+                playerCards.RemoveAt(name);
+            }
+            Card.transform.SetParent(playingGround);
+            Card.transform.localScale = new Vector3(1, 1, 1);
+
+            if (placeOfCardVar == DirectionEnum.direction.middle) {
+                Debug.Log("middle");
+            }
+            else if (placeOfCardVar == DirectionEnum.direction.rightTop) {
+                Debug.Log("rightTop");
+                if (rightCards.Count == 4 || (rightCards.Count > 10 && rightCards.Count < 17) || (rightCards.Count > 18 && rightCards.Count < 25)) {
+                    Card.transform.localRotation = Quaternion.Euler(0, 0, 180);
+
+                }
+            }
+            else if (placeOfCardVar == DirectionEnum.direction.leftTop) {
+                Debug.Log("leftTop");
+                if (leftCards.Count < 2 || (leftCards.Count > 7 && leftCards.Count < 10) || (leftCards.Count > 15)) {
+                    Card.transform.localRotation = Quaternion.Euler(0, 0, 180);
+
+                }
+
+
+            }
+            else if (placeOfCardVar == DirectionEnum.direction.rightBottom) {
+                Debug.Log("rightBottom");
+                if ((rightCards.Count != 4 && rightCards.Count < 11) || (rightCards.Count > 16 && rightCards.Count < 19) || rightCards.Count > 24) {
+                    Card.transform.localRotation = Quaternion.Euler(0, 0, 180);
+
+                }
+
+
+            }
+            else if (placeOfCardVar == DirectionEnum.direction.leftBottom) {
+                Debug.Log("leftBottom");
+                if ((leftCards.Count < 8 && leftCards.Count > 1) || (leftCards.Count >= 10 && leftCards.Count < 16) || leftCards.Count == 22) {
+                    Card.transform.localRotation = Quaternion.Euler(0, 0, 180);
+                }
+            }
+
+            if (placeOfCardVar == DirectionEnum.direction.rightTop
+                || placeOfCardVar == DirectionEnum.direction.rightBottom) {
+                rightCards.Add(Card);
+                Card.name = "rightCard_" + rightCards.Count;
+                setCard(Card, "right");
+            }
+            else if (placeOfCardVar == DirectionEnum.direction.leftTop || placeOfCardVar == DirectionEnum.direction.leftBottom) {
+                leftCards.Add(Card);
+                Card.name = "leftCard_" + leftCards.Count;
+                setCard(Card, "left");
+            }
+            else if (placeOfCardVar == DirectionEnum.direction.middle) {
+                Card.transform.localPosition = new Vector2(0, 0);
+                Card.name = "middleCard";
+                usedCardsCount++;
+                zeroPositonPlayingGround = playingGround.localPosition;
+            }
+        }
+        else {
+            if (placeOfCardVar == DirectionEnum.direction.none) {
+                Debug.Log("Can't place card");
+            }
+        }
+
+    }
+
+    void setCard(GameObject Card, string direction) {
+        int count;
+        GameObject previousCard = null;
+        int xSign;
+        if (direction.Equals("right")) {
+            count = rightCards.Count;
+            if (count > 1) {
+                previousCard = rightCards[count - 2];
+            }
+
+            xSign = 1;
+
+        }
+        else {
+            count = leftCards.Count;
+            if (count > 1) {
+                previousCard = leftCards[count - 2];
+            }
+            xSign = -1;
+        }
+
+        if (count < 3) {
+            usedCardsCount++;
+            Card.transform.localRotation = Card.transform.localRotation * Quaternion.Euler(0, 0, 90);
+            Card.GetComponent<RectTransform>().pivot = new Vector2(.5f, .5f);
+            if (count == 1) {
+                Card.transform.localPosition = new Vector3(92 * xSign, 0, 0);
+            }
+            else {
+                Card.transform.localPosition = previousCard.transform.localPosition + new Vector3(120 * xSign, 0, 0);
+            }
+        }
+        else if (count < 5) {
+            usedCardsCount++;
+            playingGround.transform.localPosition = zeroPositonPlayingGround + new Vector3(0, 200, 0);
+            if (count == 3) {
+                Card.transform.localPosition = previousCard.transform.localPosition + new Vector3(30 * xSign, -90, 0);
+            }
+            else {
+                Card.transform.localPosition = previousCard.transform.localPosition + new Vector3(0, -120, 0);
+            }
+
+        }
+        else if (count < 6) {
+            usedCardsCount++;
+            Card.transform.localRotation = Card.transform.localRotation * Quaternion.Euler(0, 0, 90);
+            Card.GetComponent<RectTransform>().pivot = new Vector2(.5f, .5f);
+            Card.transform.localPosition = previousCard.transform.localPosition + new Vector3(30 * (xSign * -1), -90, 0);
+        }
+        else if (count < 9) {
+            usedCardsCount++;
+            if (count == 6) {
+                Card.transform.parent.localPosition += new Vector3(0, 25, 0);
+                Card.transform.localPosition = previousCard.transform.localPosition + new Vector3(90 * (xSign * -1), -30, 0);
+                Card.transform.parent.localScale -= new Vector3(.05f, .05f, 0);
+            }
+            else {
+                Card.transform.localPosition = previousCard.transform.localPosition + new Vector3(0, -120, 0);
+            }
+        }
+        else if (count < 11) {
+            Card.transform.localRotation = Card.transform.localRotation * Quaternion.Euler(0, 0, 90);
+            usedCardsCount++;
+            if (count == 9) {
+                Card.transform.parent.localScale -= new Vector3(.05f, .05f, 0);
+                Card.transform.localPosition = previousCard.transform.localPosition + new Vector3(30 * xSign, -90, 0);
+
+            }
+            else {
+                Card.transform.localPosition = previousCard.transform.localPosition + new Vector3(120 * xSign, 0, 0);
+            }
+
+        }
+        else if (count < 12) {
+            usedCardsCount++;
+            Card.transform.parent.localScale = new Vector3(.8f, .8f, 1);
+            Card.transform.localPosition = previousCard.transform.localPosition + new Vector3(70 * xSign, -90, 0);
+
+        }
+        else if (usedCardsCount < 28) {
+            usedCardsCount++;
+            if (rightCards.Count > 16 || leftCards.Count > 16) {
+                Card.GetComponent<RectTransform>().pivot = new Vector2(.5f, .5f);
+                int index;
+                float xComp;
+                float yComp;
+                List<List<GameObject>> listOfArrays = new List<List<GameObject>>
+                {
+                    rightCards,
+                    leftCards
+                };
+                if (rightCards.Count > 16) {
+                    index = 0;
+                }
+                else {
+                    index = 1;
+                }
+
+                if (count == 17) {
+                    yComp = listOfArrays[index][10].transform.localPosition.y;
+                    xComp = previousCard.transform.localPosition.x + 95 * (xSign * -1);
+                    Card.transform.localPosition = new Vector3(xComp, yComp);
+                }
+                else if (count < 20) {
+                    Card.transform.localRotation = Card.transform.localRotation * Quaternion.Euler(0, 0, 90);
+                    Card.GetComponent<RectTransform>().pivot = new Vector2(.5f, .5f);
+                    if (count == 18) {
+                        yComp = listOfArrays[index][9].transform.localPosition.y;
+                        xComp = previousCard.transform.localPosition.x + 70 * xSign;
+                        Card.transform.localPosition = new Vector3(xComp, yComp);
+                    }
+                    else {
+                        Card.transform.localPosition = previousCard.transform.localPosition + new Vector3(120 * xSign, 0, 0);
+                    }
+
+                }
+                else if (count < 23) {
+                    if (count == 20) {
+                        yComp = listOfArrays[index][7].transform.localPosition.y;
+                        xComp = previousCard.transform.localPosition.x + 30 * xSign;
+                        Card.transform.localPosition = new Vector3(xComp, yComp);
+                    }
+                    else {
+                        Card.transform.localPosition = previousCard.transform.localPosition + new Vector3(0, 120, 0);
+                    }
+
+                }
+                else if (count < 24) {
+                    Card.transform.localRotation = Card.transform.localRotation * Quaternion.Euler(0, 0, 90);
+                    Card.GetComponent<RectTransform>().pivot = new Vector2(.5f, .5f);
+                    yComp = listOfArrays[index][4].transform.localPosition.y;
+                    xComp = previousCard.transform.localPosition.x + 90 * (xSign * -1);
+                    Card.transform.localPosition = new Vector3(xComp, yComp);
+                }
+                else if (count < 26) {
+                    if (count == 24) {
+                        yComp = listOfArrays[index][3].transform.localPosition.y;
+                        xComp = previousCard.transform.localPosition.x + 30 * (xSign * -1);
+                        Card.transform.localPosition = new Vector3(xComp, yComp);
+                    }
+                    else {
+                        Card.transform.localPosition = previousCard.transform.localPosition + new Vector3(0, 120, 0);
+                    }
+                }
+                else if (count < 28) {
+                    Card.transform.localRotation = Card.transform.localRotation * Quaternion.Euler(0, 0, 90);
+                    Card.GetComponent<RectTransform>().pivot = new Vector2(.5f, .5f);
+                    if (count == 26) {
+                        yComp = listOfArrays[index][1].transform.localPosition.y;
+                        xComp = previousCard.transform.localPosition.x + 30 * xSign;
+                        Card.transform.localPosition = new Vector3(xComp, yComp);
+                    }
+                    else {
+                        Card.transform.localPosition = previousCard.transform.localPosition + new Vector3(120 * xSign, 0, 0);
+                    }
+                }
+            }
+            else {
+                Card.transform.localRotation = Card.transform.localRotation * Quaternion.Euler(0, 0, 90);
+                Card.GetComponent<RectTransform>().pivot = new Vector2(.5f, .5f);
+                if (count == 12) {
+
+                    Card.transform.localPosition = previousCard.transform.localPosition + new Vector3(95 * (xSign * -1), -30, 0);
+                }
+                else {
+                    Card.transform.localPosition = previousCard.transform.localPosition + new Vector3(125 * (xSign * -1), 0, 0);
+                }
+                if (usedCardsCount == 28) {
+                    Card.transform.localPosition += new Vector3(3.25f, 0, 0);
+                }
+            }
+
+        }
+    }
 
     void setOpponentCards() {
         bool rebuild = false;
@@ -351,14 +532,14 @@ public class cardControl : MonoBehaviour
             int opponentCount = 7;
             for (int i = 0; i < opponentCount; i++) {
                 opponentCardsCount = testCards.Count;
-                int randomNumber = Random.Range(1, cardSprites.Count);
+                int randomNumber = UnityEngine.Random.Range(1, cardSprites.Count);
                 opponentCards.Add(cardSprites[randomNumber]);
                 cardSprites.RemoveAt(randomNumber);
                 testCards[i].GetComponent<Image>().sprite = opponentCards[i];
                 testCards[i].name = "test_" + (i + 1);
                 var temp = i;
-                testCards[i].AddComponent<Button>().onClick.AddListener(() => SelectCard(testCards[temp]));
-                //
+                testCards[i].AddComponent<Button>().onClick.AddListener(() => StartCoroutine(waitUntilPressed(testCards[temp])));
+
             }
         }
         else {
@@ -375,7 +556,7 @@ public class cardControl : MonoBehaviour
                     testCards[i].name = "test_" + (i + 1);
                     testCards[i].GetComponent<Button>().onClick.RemoveAllListeners();
                     var temp = i;
-                    testCards[i].GetComponent<Button>().onClick.AddListener(() => SelectCard(testCards[temp]));
+                    testCards[i].GetComponent<Button>().onClick.AddListener(() => StartCoroutine(waitUntilPressed(testCards[temp])));
                 }
             }
         }
@@ -384,29 +565,26 @@ public class cardControl : MonoBehaviour
 
     void setPlayerCards() {
         bool rebuild = false;
-        // IMPORTANT:!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-        // prevent it from constantly updating like the bank
 
         if (playerCards.Count == 7 && cardSprites.Count == 28) {
-            // need to check if they are the first 7 that i added manually
             for (int i = 0; i < playerCards.Count; i++) {
                 playerCardsCount = playerCards.Count;
-                int randomNumber = Random.Range(1, cardSprites.Count);
+                int randomNumber = UnityEngine.Random.Range(1, cardSprites.Count);
                 playerCards[i].GetComponent<Image>().sprite = cardSprites[randomNumber];
                 cardText[i].text = TranslateMethod(playerCards[i].GetComponent<Image>().sprite);
                 cardSprites.RemoveAt(randomNumber);
                 zeroPositionParent = objectNewParent.localPosition;
                 zeroScaleParent = objectNewParent.localScale;
                 var temp = i;
-                playerCards[i].AddComponent<Button>().onClick.AddListener(() => SelectCard(playerCards[temp]));
+                playerCards[i].AddComponent<Button>().onClick.AddListener(() => StartCoroutine(waitUntilPressed(playerCards[temp])));
             }
         }
         else {
             if (playerCards.Count < 10) {
                 playerCardsCount = playerCards.Count;
                 for (int i = 0; i < playerCards.Count; i++) {
-                    GameObject bankCard = bankCards[i];
-                    if (!bankCard.name.Equals("card_" + (i + 1))) {
+                    GameObject playerCard = playerCards[i];
+                    if (!playerCard.name.Equals("card_" + (i + 1))) {
                         rebuild = true;
                         break;
                     }
@@ -433,11 +611,11 @@ public class cardControl : MonoBehaviour
 
                         var temp = i;
                         if (playerCards[i].GetComponent<Button>() == null) {
-                            playerCards[i].AddComponent<Button>().onClick.AddListener(() => SelectCard(playerCards[temp]));
+                            playerCards[i].AddComponent<Button>().onClick.AddListener(() => StartCoroutine(waitUntilPressed(playerCards[temp])));
                         }
                         else {
                             playerCards[i].GetComponent<Button>().onClick.RemoveAllListeners();
-                            playerCards[i].GetComponent<Button>().onClick.AddListener(() => SelectCard(playerCards[temp]));
+                            playerCards[i].GetComponent<Button>().onClick.AddListener(() => StartCoroutine(waitUntilPressed(playerCards[temp])));
                         }
 
 
@@ -449,8 +627,8 @@ public class cardControl : MonoBehaviour
             else {
                 playerCardsCount = playerCards.Count;
                 for (int i = 0; i < playerCards.Count; i++) {
-                    GameObject bankCard = bankCards[i];
-                    if (!bankCard.name.Equals("card_" + (i + 1))) {
+                    GameObject playerCard = playerCards[i];
+                    if (!playerCard.name.Equals("card_" + (i + 1))) {
                         rebuild = true;
                         break;
                     }
@@ -467,7 +645,6 @@ public class cardControl : MonoBehaviour
                         if (i > 6) {
                             objectNewParent.localScale = zeroScaleParent - new Vector3(.1f * count, .1f * count++, 0);
                             if (playerCards.Count > 7) {
-                                // -25
                                 objectNewParent.localPosition = zeroPositionParent - new Vector3(15, 0, 0);
                             }
                         }
@@ -477,11 +654,11 @@ public class cardControl : MonoBehaviour
 
                         var temp = i;
                         if (playerCards[i].GetComponent<Button>() == null) {
-                            playerCards[i].AddComponent<Button>().onClick.AddListener(() => SelectCard(playerCards[temp]));
+                            playerCards[i].AddComponent<Button>().onClick.AddListener(() => StartCoroutine(waitUntilPressed(playerCards[temp])));
                         }
                         else {
                             playerCards[i].GetComponent<Button>().onClick.RemoveAllListeners();
-                            playerCards[i].GetComponent<Button>().onClick.AddListener(() => SelectCard(playerCards[temp]));
+                            playerCards[i].GetComponent<Button>().onClick.AddListener(() => StartCoroutine(waitUntilPressed(playerCards[temp])));
                         }
 
                     }
@@ -503,11 +680,11 @@ public class cardControl : MonoBehaviour
                         playerCards[i].transform.localPosition = new Vector3(90 * (i - 9), 0, 0);
                         var temp = i;
                         if (playerCards[i].GetComponent<Button>() == null) {
-                            playerCards[i].AddComponent<Button>().onClick.AddListener(() => SelectCard(playerCards[temp]));
+                            playerCards[i].AddComponent<Button>().onClick.AddListener(() => StartCoroutine(waitUntilPressed(playerCards[temp])));
                         }
                         else {
                             playerCards[i].GetComponent<Button>().onClick.RemoveAllListeners();
-                            playerCards[i].GetComponent<Button>().onClick.AddListener(() => SelectCard(playerCards[temp]));
+                            playerCards[i].GetComponent<Button>().onClick.AddListener(() => StartCoroutine(waitUntilPressed(playerCards[temp])));
                         }
                     }
                 }
@@ -516,9 +693,94 @@ public class cardControl : MonoBehaviour
         }
     }
 
+    void ActivateBankButton() {
+        bool activate = true;
+        GameObject rightCardToCheck;
+        GameObject leftCardToCheck;
+        int[] middleCardValue = { 0 };
+        int[] leftCardValue = { 0 };
+        int[] rightCardValue = { 0 };
+        if (middleCard != null) {
+            middleCardValue = GetValue(middleCard,'n');
+        }
+        if (rightCards.Count != 0) {
+            rightCardToCheck = rightCards[rightCards.Count - 1];
+            rightCardValue = GetValue(rightCardToCheck,'n');
+        }
+        if (leftCards.Count != 0) {
+            leftCardToCheck = leftCards[leftCards.Count - 1];
+            leftCardValue = GetValue(leftCardToCheck,'n');
+        }
+
+        if (middleCard == null) {
+            foreach (GameObject card in playerCards) {
+                int[] valueOfCard = GetValue(card,'n');
+                if (valueOfCard[0].Equals(valueOfCard[1])) {
+                    activate = false;
+                    break;
+                }
+            }
+        }
+        else if (rightCards.Count == 0 && leftCards.Count == 0 && middleCard != null) {
+            foreach (GameObject card in playerCards) {
+                int[] valueOfCard = GetValue(card, 'n');
+                if (valueOfCard[0].Equals(middleCardValue[0]) || valueOfCard[1].Equals(middleCardValue[0])) {
+                    activate = false;
+                    break;
+                }
+            }
+        }
+        else if (rightCards.Count > 0 && leftCards.Count == 0 && middleCard != null) {
+            foreach (GameObject card in playerCards) {
+                int[] valueOfCard = GetValue(card, 'n');
+                if (valueOfCard[0].Equals(middleCardValue[0]) || valueOfCard[1].Equals(middleCardValue[0])) {
+                    activate = false;
+                    break;
+                }
+                else if (valueOfCard[0].Equals(rightCardValue[1]) || valueOfCard[1].Equals(rightCardValue[1])) {
+                    activate = false;
+                    break;
+                }
+            }
+        }
+        else if (rightCards.Count == 0 && leftCards.Count > 0 && middleCard != null) {
+            foreach (GameObject card in playerCards) {
+                int[] valueOfCard = GetValue(card,'n');
+                if (valueOfCard[0].Equals(middleCardValue[0]) || valueOfCard[1].Equals(middleCardValue[0])) {
+                    activate = false;
+                    break;
+                }
+                else if (valueOfCard[0].Equals(leftCardValue[0]) || valueOfCard[1].Equals(leftCardValue[0])) {
+                    activate = false;
+                    break;
+                }
+            }
+        }
+        else if (rightCards.Count > 0 && leftCards.Count > 0) {
+            foreach (GameObject card in playerCards) {
+                int[] valueOfCard = GetValue(card,'n');
+                if (valueOfCard[0].Equals(leftCardValue[0]) || valueOfCard[1].Equals(leftCardValue[0])) {
+                    activate = false;
+                    break;
+                }
+                else if (valueOfCard[0].Equals(rightCardValue[1]) || valueOfCard[1].Equals(rightCardValue[1])) {
+                    activate = false;
+                    break;
+                }
+            }
+        }
 
 
-    // need to edit test on chosing a card then adding a card
+
+        if (activate) {
+            bankButton.gameObject.SetActive(true);
+        }
+        else {
+            bankButton.gameObject.SetActive(false);
+        }
+    }
+
+
 
     void BankCardsOnclick(GameObject CardClicked) {
         currentCards = cardSprites.Count;
@@ -531,7 +793,6 @@ public class cardControl : MonoBehaviour
         cardSprites.RemoveAt(objectName);
         bankCards.RemoveAt(objectName);
 
-        //
     }
 
 
@@ -545,6 +806,10 @@ public class cardControl : MonoBehaviour
                 rebuild = true;
                 break;
             }
+        }
+        if (cardSprites.Count == 0) {
+            bankButton.gameObject.SetActive(false);
+            return;
         }
         if (rebuild) {
 
@@ -597,6 +862,10 @@ public class cardControl : MonoBehaviour
     void Start() {
         bool cardSwitch = PlayerPrefs.GetInt("Cards") == 0 ? true : false;
 
+        object[] temp = Resources.LoadAll("cards", typeof(Sprite));
+        for (int i = 0; i < temp.Length; i++) {
+            cardSprites.Add(temp[i] as Sprite);
+        }
 
         // not mine so i don't know how it works.
         cardSprites.ShuffleMethod();
@@ -613,30 +882,8 @@ public class cardControl : MonoBehaviour
             }
         }
 
-        //cardText[0].text = "اهلا";
-
-        // loops to assign the cards for both the player and the opponent
-        // i don't check if the random number has been done before because i remove the sprite when chosen just like a real game
-
         setPlayerCards();
         setOpponentCards();
-
-
-        //int opponentCount = 7;
-        //for (int i = 0; i < opponentCount; i++) {
-        //    int randomNumber = Random.Range(1, cardSprites.Count);
-        //    opponentCards.Add(cardSprites[randomNumber]);
-        //    cardSprites.RemoveAt(randomNumber);
-        //}
-        //for (int i = 0; i < 7; i++) {
-        //    testCards[i].GetComponent<Image>().sprite = opponentCards[i];
-        //    testCards[i].name = "test_" + (i + 1);
-        //    var temp = i;
-        //    testCards[i].AddComponent<Button>().onClick.AddListener(() => SelectCard(testCards[temp]));
-        //}
-
-
-
         BankCardsShow();
 
 
@@ -647,8 +894,6 @@ public class cardControl : MonoBehaviour
         int newCards = cardSprites.Count;
         int newPlayerCards = playerCards.Count;
         int newOpponentCards = testCards.Count;
-
-        //Debug.Log("new:" + newCards + " old:" + currentCards);
         if (newCards < 14) {
             if (currentCards != newCards) {
                 BankCardsShow();
@@ -661,8 +906,8 @@ public class cardControl : MonoBehaviour
         if (newOpponentCards != opponentCardsCount) {
             setOpponentCards();
         }
+        ActivateBankButton();
 
-        // old count new couny
     }
 
 
