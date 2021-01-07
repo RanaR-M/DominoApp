@@ -7,9 +7,6 @@
         rightBottom,
         leftTop,
         leftBottom,
-        rightLeftTop,
-        rightLeftBottom,
-        rightLeftMixed,
         none
     }
 

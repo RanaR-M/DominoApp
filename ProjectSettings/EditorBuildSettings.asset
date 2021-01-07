@@ -14,13 +14,13 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/CreateAccount.unity
     guid: 9afbaa2c60b0352489cce9e2de76068e
-  - enabled: 0
-    path: Assets/Scenes/MainPagePlay.unity
-    guid: 21f5a1a2d2ad4dc40b27e9d1b622365c
   - enabled: 1
     path: Assets/Scenes/GamePage.unity
     guid: 8ce6ff98663cf1d479e5b8d89fdfd616
   - enabled: 1
     path: Assets/Scenes/Settings.unity
     guid: dc4a7586de178824f987ebf6008b84da
+  - enabled: 1
+    path: Assets/Scenes/Lobby.unity
+    guid: 2fa5fb0b6f3227f44b3c71d152303ff2
   m_configObjects: {}
